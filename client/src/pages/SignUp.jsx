@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../public/images/fav.png";
 
-const Login = () => {
+const SignUp = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
 
@@ -16,7 +16,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/sign-in", {
+    fetch("/sign-up", {
       method: "POST",
       body: JSON.stringify(userInfo),
       headers: {
@@ -26,7 +26,7 @@ const Login = () => {
       .then((res) => {
         if (res.ok) {
           console.log("Data sent successfully");
-          // Redirect to desired location after successful sign-in
+          // Redirect to desired location after successful sign-up
           navigate("/dashboard");
         } else {
           console.log("Failed to send data");
@@ -40,26 +40,26 @@ const Login = () => {
   return (
     <>
       <section className="login-page">
-        <Link to={"/"}>
+        <a href="/">
           <img src={logo} alt="Logo" className="logo" />
-        </Link>
+        </a>
 
         <div className="container">
-          <div className="user signinBx">
+          <div className="user signupBx">
             <div className="imgBx">
               <img
-                src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img1.jpg"
+                src="https://raw.githubusercontent.com/WoojinFive/CSS_Playground/master/Responsive%20Login%20and%20Registration%20Form/img2.jpg"
                 alt=""
               />
             </div>
             <div className="formBx">
               <form onSubmit={handleSubmit}>
-                <h2>Sign In</h2>
+                <h2>Create an account</h2>
                 <input
                   onChange={handleInput}
-                  type="text"
+                  type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder="Email Address"
                 />
                 <input
                   onChange={handleInput}
@@ -67,9 +67,15 @@ const Login = () => {
                   name="password"
                   placeholder="Password"
                 />
-                <input type="submit" value="Login" />
+                <input
+                  onChange={handleInput}
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                />
+                <input type="submit" value="Sign Up" />
                 <p className="signup">
-                  Don't have an account? <Link to={"/signup"}>Sign Up</Link>
+                  Already have an account? <Link to={"/login"}> Sign in</Link>
                 </p>
               </form>
             </div>
@@ -80,4 +86,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

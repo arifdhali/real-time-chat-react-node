@@ -29,7 +29,7 @@ $background-color_1: #f8dd30;
   align-items: center;
   flex-direction: column;
   padding: 20px;
-
+}
   .logo{
     margin: 1rem auto;
   }
@@ -152,7 +152,7 @@ $background-color_1: #f8dd30;
       }
     }
   }
-}
+
 @media (max-width: 991px) {
   .login-page {
     .container {
