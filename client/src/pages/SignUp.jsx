@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../public/images/fav.png";
+import logo from "../images/fav.png";
 
 const SignUp = () => {
   const navigate = useNavigate();

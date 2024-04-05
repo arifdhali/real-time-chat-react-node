@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../public/images/fav.png";
+import logo from "../images/fav.png";
 
 const Login = () => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({ email: "", password: "" });
+  // for server response
+  const [serverResponse, setServerResponse] = useState("");
+  const { error, success, message } = serverResponse;
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -13,28 +16,29 @@ const Login = () => {
       [name]: value,
     }));
   };
-
-  const handleSubmit = (e) => {
+  let api = `http://localhost:3000`;
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    fetch("/sign-in", {
-      method: "POST",
-      body: JSON.stringify(userInfo),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => {
-        if (res.ok) {
-          console.log("Data sent successfully");
-          // Redirect to desired location after successful sign-in
-          navigate("/dashboard");
-        } else {
-          console.log("Failed to send data");
-        }
-      })
-      .catch((err) => {
-        console.error("Error occurred while sending user data:", err);
+
+    try {
+      const response = await fetch(`${api}/signin`, {
+        method: "POST",
+        body: JSON.stringify(userInfo),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
+
+      if (response.ok) {
+        let data = await response.json();
+        setServerResponse(data);
+      } else {
+        let data = await response.json();
+        setServerResponse(data);
+      }
+    } catch (err) {
+      console.error("Error occurred while sending user data:", err);
+    }
   };
 
   return (
@@ -68,6 +72,12 @@ const Login = () => {
                   placeholder="Password"
                 />
                 <input type="submit" value="Login" />
+                {/* alert message will showing here */}
+                <div className="text-center">
+                  <small className={`alert-${success ? "success" : "error"}`}>
+                    {message}
+                  </small>
+                </div>
                 <p className="signup">
                   Don't have an account? <Link to={"/signup"}>Sign Up</Link>
                 </p>
